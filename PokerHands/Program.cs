@@ -9,7 +9,7 @@ namespace PokerHands
     class Program
     {
         static void Main(string[] args)
-        {//test cases for each type of hand and one that has the string out of order of value
+        {//test cases for each type of hand and one that has the string out of order of value, tests cards in deck, randomizes deck
             Hand test1 = new Hand("10H JH QH KH AH");
             test1.showCards();
             Console.WriteLine(test1.DetermineHandValue());
@@ -75,6 +75,27 @@ namespace PokerHands
             Console.WriteLine(test11.DetermineHandValue());
             Console.WriteLine("wrong order royal flush test");
             Console.WriteLine("__________________________________________________________________________________");
+            
+            Deck test12 = new Deck();
+            test12.sayCards();
+            Console.WriteLine("creates deck and displays cards");
+            Console.WriteLine("__________________________________________________________________________________");
+
+            test12.randomizeOrder();
+            test12.sayCards();
+            Console.WriteLine("randoize deck test 1 and displays cards");
+            Console.WriteLine("__________________________________________________________________________________");
+
+            test12.randomizeOrder();
+            test12.sayCards();
+            Console.WriteLine("randoize deck test 2 and displays cards");
+            Console.WriteLine("__________________________________________________________________________________");
+
+            test12.randomizeOrder();
+            test12.sayCards();
+            Console.WriteLine("randoize deck test 3");
+            Console.WriteLine("__________________________________________________________________________________");
+
 
             Console.ReadKey();
         }

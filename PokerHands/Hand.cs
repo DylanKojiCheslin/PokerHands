@@ -9,8 +9,17 @@ namespace PokerHands
     class Hand
     {
         List<Card> Cards { get; set; }//the card obj in the hand
-        string handType { get; set; }//string recording the type of hand ie flush, two pair, etc
+        public string handType { get; set; }//string recording the type of hand ie flush, two pair, etc
         public bool scoreFound { get; set; }//tells if the search for a hand type is over
+        public bool fullHand { get; set; }//not used currently
+        /// <summary>
+        /// tells if the hand is full
+        /// </summary>
+        /// <returns>bool if hand is full</returns>
+        public bool isFullHand()
+        {
+            return fullHand;
+        }//not used currently
         /// <summary>
         /// displays the values and suit of each card
         /// </summary>
@@ -81,7 +90,7 @@ namespace PokerHands
             return this.handType;
         }
         /// <summary>
-        /// method tests if all cards are the same suit
+        /// return a true bool if all cards are the same suit
         /// </summary>
         /// <returns>bool true if all same suit</returns>
         public bool isFlush()//tests if all cards are same suit
@@ -108,7 +117,7 @@ namespace PokerHands
             return returnHolder;
         }
         /// <summary>
-        /// method return the number of distinct card values as an int
+        /// method returns the number of distinct card values as an int
         /// </summary>
         /// <returns>int distinct values of cards</returns>
         public int numOfDistinctCardValues()
@@ -236,6 +245,7 @@ namespace PokerHands
             }
             this.Cards = new List<Card>(storage.OrderBy(x => x.Value));//makes a new list and populates it with the sorted cards from the storage list
             this.scoreFound = false;//sets scorefound to false
+            this.fullHand = true;
         }
     }
 }

@@ -16,9 +16,9 @@ namespace PokerHands
 
 
         /// <summary>
-        /// makes new hand from string input
+        /// makes new Card from input string 
         /// </summary>
-        /// <param name="cardDet">the string</param>
+        /// <param name="cardDet">input string</param>
         public Card(string cardDet)
         {
 
@@ -27,12 +27,12 @@ namespace PokerHands
                 this.valueHolder = cardDet[0].ToString();
                 this.suitHolder = cardDet[1];
             }
-            else
+            else//if the input is 10 turns string input into card attributes
             {
                 this.valueHolder = cardDet[0].ToString() +cardDet[1].ToString();
                 this.suitHolder = cardDet[2];
             }
-            switch (valueHolder)
+            switch (valueHolder)//converts card value ie king into a number
             {
                 case "2":
                     this.Value = 2;
@@ -75,8 +75,14 @@ namespace PokerHands
                     break;
 
             }
-            this.Suit = suitHolder;
-        
+            this.Suit = suitHolder;//asigns card suit
+        }// constructor
+        /// <summary>
+        /// writes the cards values to the console
+        /// </summary>
+        public void talk()
+        {
+            Console.WriteLine(this.valueHolder+this.Suit);
         }
     }
 }
