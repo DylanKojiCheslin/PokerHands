@@ -28,14 +28,13 @@ namespace PokerHands
             Console.WriteLine(" ");
             foreach ( Card x in this.Cards)
             {
-                Console.Write(x.Value.ToString() + "" + x.Suit.ToString() + " ");
+                Console.Write(x.Value.ToString() + "" + x.suit.getPic().ToString() + " ");
             }
         }
         /// <summary>
-        /// return the type of hand ie flush, fullhouse, two pair
+        /// sets the type of hand ie flush, fullhouse, two pair
         /// </summary>
-        /// <returns>string type of hand</returns>
-        public string DetermineHandValue()
+        public void DetermineHandValue()
         {
             //royal flush-10 J,Q,K,A all same suit
             if (!scoreFound)
@@ -87,6 +86,17 @@ namespace PokerHands
             {
                 handIsHighCard();
             }
+        }
+        /// <summary>
+        /// returns the hands' value
+        /// </summary>
+        /// <returns>string hands' value</returns>
+        public string GetHandValue()
+        {
+            if (this.handType == null)
+            {
+                this.DetermineHandValue();
+            }
             return this.handType;
         }
         /// <summary>
@@ -96,7 +106,7 @@ namespace PokerHands
         public bool isFlush()//tests if all cards are same suit
         {
             bool returnHolder = false;
-            int same = this.Cards.Where(x=> x.Suit == this.Cards.First().Suit).Count();
+            int same = this.Cards.Where(x=> x.suit.getName() == this.Cards.First().suit.getName()).Count();
             if (same == 5)
             {
                 returnHolder = true;
@@ -228,11 +238,11 @@ namespace PokerHands
         /// </summary>
         public void handIsHighCard()
         {
-            this.handType = "High Card: " + this.Cards.OrderByDescending(x => x.Value).First().Value + " " + this.Cards.OrderByDescending(x => x.Value).First().Suit;
+            this.handType = "High Card: " + this.Cards.OrderByDescending(x => x.Value).First().Value + " " + this.Cards.OrderByDescending(x => x.Value).First().suit.getName();
             this.scoreFound = true;
         }
         /// <summary>
-        /// construtor for hand class
+        /// construtor for hand class works with string input
         /// </summary>
         /// <param name="handString">string of card values</param>
         public Hand(string handString)
@@ -246,6 +256,26 @@ namespace PokerHands
             this.Cards = new List<Card>(storage.OrderBy(x => x.Value));//makes a new list and populates it with the sorted cards from the storage list
             this.scoreFound = false;//sets scorefound to false
             this.fullHand = true;
+            this.DetermineHandValue();
         }
+        /// <summary>
+        /// construtor for hand class works with list input
+        /// </summary>
+        /// <param name="newCards">List(cards) </param>
+        public Hand( List<Card> newCards)
+        {
+            this.Cards = newCards;
+            this.scoreFound = false;
+            this.fullHand = true;
+            this.DetermineHandValue();
+        }
+
+
+        public void discardHand()
+        {
+            this.Cards.Clear();
+        }
+
+
     }
 }

@@ -14,6 +14,7 @@ namespace PokerHands
         /// </summary>
         public void fillDeck()
         {
+            //todo change deck creation to take 2 inputs of suit class and values class, run foreach loop of all value/suit combos to make it reactive in creation
             char suitHolder='Z';
             for (int i = 0; i < 3; i++)
             {
@@ -102,6 +103,13 @@ namespace PokerHands
             Random rand = new Random();
             this.guts = this.guts.OrderBy(c => rand.Next()).Select(c => c).ToList();
         }
+
+        public void reset()
+        {
+            this.guts.Clear();
+            this.fillDeck();
+            this.randomizeOrder();
+        }
         /// <summary>
         /// constructor
         /// </summary>
@@ -109,6 +117,15 @@ namespace PokerHands
         {
             guts = new List<Card>();
             this.fillDeck();
+        }
+
+
+        //return  the first card and remove it from list
+        public Card takeCard()
+        {
+            Card tempcard = guts.First();
+            guts[0].Remove();
+            return tempcard;
         }
     }
 }

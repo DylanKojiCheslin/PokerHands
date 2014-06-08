@@ -8,12 +8,36 @@ namespace PokerHands
 {
     class Dealer
     {
-        //not used currently
         Deck PackOfCards { get; set; }
-        //deals cards one at a time at random to players and nonplayercharacters
 
-        //shuffle cards
 
+
+        //changeDeck - discards old deck and makes a new one
+        public void changeDeck()
+        {
+            this.PackOfCards.reset();
+        }
+        //shuffle - randomizes cards
+        public void shuffle()
+        {
+            this.PackOfCards.randomizeOrder();
+        }
         //constructor
+        public Dealer()
+        {
+            this.PackOfCards = new Deck();
+            this.shuffle();
+        }
+
+        public List<Card> takeHand()
+        {
+            List<Card> temp= new List<Card>();
+            this.shuffle();
+            for (int i = 0; i < 4; i++)
+            {
+                temp.Add(this.PackOfCards.takeCard());
+            }
+            return temp;
+        }
     }
 }

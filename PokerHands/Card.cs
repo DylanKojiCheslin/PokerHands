@@ -8,7 +8,7 @@ namespace PokerHands
 {
     class Card
     {
-        public char Suit { get; set; }
+        internal Suit suit { get; set; }
         public int Value { get; set; }
         string valueHolder { get;  set; }
         char suitHolder { get; set; }
@@ -75,14 +75,19 @@ namespace PokerHands
                     break;
 
             }
-            this.Suit = suitHolder;//asigns card suit
+            this.suit = new Suit(suitHolder);//asigns card suit
         }// constructor
         /// <summary>
         /// writes the cards values to the console
         /// </summary>
         public void talk()
         {
-            Console.WriteLine(this.valueHolder+this.Suit);
+            Console.WriteLine(this.valueHolder+this.suit.getPic());
+        }
+
+        internal void Remove()
+        {
+            throw new NotImplementedException();
         }
     }
 }
