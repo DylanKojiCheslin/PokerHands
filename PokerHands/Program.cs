@@ -9,8 +9,10 @@ namespace PokerHands
     class Program
     {
         static void Main(string[] args)
-        {//test cases for each type of hand and one that has the string out of order of value, tests cards in deck, randomizes deck
-            Hand test1 = new Hand("10H JH QH KH AH");
+        {
+            
+            //test cases for each type of hand and one that has the string out of order of value, tests cards in deck, randomizes deck
+            Hand test1 = new Hand("TH JH QH KH AH");
             test1.showCards();
             Console.WriteLine(test1.GetHandValue());
             Console.WriteLine("royal flush test");
@@ -70,7 +72,7 @@ namespace PokerHands
             Console.WriteLine("high card test");
             Console.WriteLine("__________________________________________________________________________________");
 
-            Hand test11 = new Hand("AH 10H JH QH KH");
+            Hand test11 = new Hand("AH TH JH QH KH");
             test11.showCards();
             Console.WriteLine(test11.GetHandValue());
             Console.WriteLine("wrong order royal flush test");

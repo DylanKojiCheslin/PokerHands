@@ -14,9 +14,9 @@ namespace PokerHands
         /// </summary>
         public void fillDeck()
         {
-            //todo change deck creation to take 2 inputs of suit class and values class, run foreach loop of all value/suit combos to make it reactive in creation
+            //todo change deck creation to take 2 inputs of suit class and rank class, run foreach loop of all value/suit combos to make it reactive in creation
             char suitHolder='Z';
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 switch (i)
                 {
@@ -40,7 +40,7 @@ namespace PokerHands
                     switch (x)
                     {
                         case 2:
-                            guts.Add(new Card("2" + suitHolder.ToString()));
+                            this.guts.Add(new Card(2 + "" + suitHolder));
                             break;
                         case 3:
                             this.guts.Add(new Card(3 + "" + suitHolder));
@@ -64,7 +64,7 @@ namespace PokerHands
                             this.guts.Add(new Card(9 + "" + suitHolder));
                             break;
                         case 10:
-                            this.guts.Add(new Card(10 + "" + suitHolder));
+                            this.guts.Add(new Card('T' + "" + suitHolder));
                             break;
                         case 11:
                             this.guts.Add(new Card('J' + "" + suitHolder));

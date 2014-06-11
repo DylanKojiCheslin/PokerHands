@@ -12,6 +12,15 @@ namespace PokerHands
         public string handType { get; set; }//string recording the type of hand ie flush, two pair, etc
         public bool scoreFound { get; set; }//tells if the search for a hand type is over
         public bool fullHand { get; set; }//not used currently
+        public string getHandType()
+        {
+            if (!scoreFound)
+                {
+                this.DetermineHandValue();
+                }
+            return this.handType;
+        }
+
         /// <summary>
         /// tells if the hand is full
         /// </summary>
@@ -28,7 +37,7 @@ namespace PokerHands
             Console.WriteLine(" ");
             foreach ( Card x in this.Cards)
             {
-                Console.Write(x.Value.ToString() + "" + x.suit.getPic().ToString() + " ");
+                Console.Write(x.rank.getLetter().ToString() + "" + x.suit.getPic().ToString() + " ");
             }
         }
         /// <summary>
@@ -36,7 +45,7 @@ namespace PokerHands
         /// </summary>
         public void DetermineHandValue()
         {
-            //royal flush-10 J,Q,K,A all same suit
+            //royal flush-T,J,Q,K,A all same suit
             if (!scoreFound)
             {
                 handIsRoyalFlush();
@@ -120,7 +129,7 @@ namespace PokerHands
         public bool isStraight()//tests if all cards are consecutive values
         {
             bool returnHolder = false;
-            if (((this.Cards.Last().Value) - (this.Cards.First().Value)) == 4 && (numOfDistinctCardValues() == 5))
+            if (((this.Cards.Last().rank.getValue()) - (this.Cards.First().rank.getValue())) == 4 && (numOfDistinctCardValues() == 5))
             {
                 returnHolder = true;
             }
@@ -132,14 +141,14 @@ namespace PokerHands
         /// <returns>int distinct values of cards</returns>
         public int numOfDistinctCardValues()
         {
-            return this.Cards.Select(x => x.Value).Distinct().Count();
+            return this.Cards.Select(x => x.rank.getValue()).Distinct().Count();
         }
         /// <summary>
         /// tests if the hand is a royal flush
         /// </summary>
         public void handIsRoyalFlush()
         {
-            if (isFlush() && isStraight() && this.Cards.OrderBy(x => x.Value).Last().Value == 14)//test if all one suit, consecutive order, highest value card is ace 
+            if (isFlush() && isStraight() && this.Cards.OrderBy(x => x.rank.getValue()).Last().rank.getValue() == 14)//test if all one suit, consecutive order, highest value card is ace 
 	        {
                 this.handType = "Royal Flush";
                 this.scoreFound = true;
@@ -161,7 +170,7 @@ namespace PokerHands
         /// </summary>
         public void handIsFourOfAKind()
         {
-            if (numOfDistinctCardValues() == 2 && (this.Cards.First().Value == this.Cards[3].Value || this.Cards[1].Value == this.Cards.Last().Value))//tests if there are 2 distinct card values and if four of them are the same
+            if (numOfDistinctCardValues() == 2 && (this.Cards.First().rank.getValue() == this.Cards[3].rank.getValue() || this.Cards[1].rank.getValue() == this.Cards.Last().rank.getValue()))//tests if there are 2 distinct card values and if four of them are the same
             {
                 this.handType = "Four Of A Kind";
                 this.scoreFound = true;
@@ -172,7 +181,7 @@ namespace PokerHands
         /// </summary>
         public void handIsFullHouse()
         {
-            if (numOfDistinctCardValues() == 2 && (this.Cards.First().Value == this.Cards[2].Value&&this.Cards[3].Value==this.Cards[4].Value||this.Cards.First().Value == this.Cards[1].Value&&this.Cards[2].Value==this.Cards[4].Value))//test if there are 2 distinct card values and 3 of one and 2 of the other
+            if (numOfDistinctCardValues() == 2 && (this.Cards.First().rank.getValue() == this.Cards[2].rank.getValue() && this.Cards[3].rank.getValue() == this.Cards[4].rank.getValue() || this.Cards.First().rank.getValue() == this.Cards[1].rank.getValue() && this.Cards[2].rank.getValue() == this.Cards[4].rank.getValue()))//test if there are 2 distinct card values and 3 of one and 2 of the other
             {
                 this.handType = "Full House";
                 this.scoreFound = true;
@@ -205,7 +214,7 @@ namespace PokerHands
         /// </summary>
         public void handIsThreeOfAKind()
         {
-            if (this.Cards.First().Value == this.Cards[2].Value||this.Cards[1].Value == this.Cards[3].Value||this.Cards[2].Value == this.Cards[4].Value)//tests if three of the cards have the same value
+            if (this.Cards.First().rank.getValue() == this.Cards[2].rank.getValue() || this.Cards[1].rank.getValue() == this.Cards[3].rank.getValue() || this.Cards[2].rank.getValue() == this.Cards[4].rank.getValue())//tests if three of the cards have the same value
             {
                 this.handType = "Three Of A Kind";
                 this.scoreFound = true;
@@ -238,7 +247,7 @@ namespace PokerHands
         /// </summary>
         public void handIsHighCard()
         {
-            this.handType = "High Card: " + this.Cards.OrderByDescending(x => x.Value).First().Value + " " + this.Cards.OrderByDescending(x => x.Value).First().suit.getName();
+            this.handType = "High Card: " + this.Cards.OrderByDescending(x => x.rank.getValue()).First().rank.getName() + " " + this.Cards.OrderByDescending(x => x.rank.getValue()).First().suit.getName();
             this.scoreFound = true;
         }
         /// <summary>
@@ -253,7 +262,7 @@ namespace PokerHands
             {
                 storage.Add(new Card(x));
             }
-            this.Cards = new List<Card>(storage.OrderBy(x => x.Value));//makes a new list and populates it with the sorted cards from the storage list
+            this.Cards = new List<Card>(storage.OrderBy(x => x.rank.getValue()));//makes a new list and populates it with the sorted cards from the storage list
             this.scoreFound = false;//sets scorefound to false
             this.fullHand = true;
             this.DetermineHandValue();
@@ -269,13 +278,9 @@ namespace PokerHands
             this.fullHand = true;
             this.DetermineHandValue();
         }
-
-
         public void discardHand()
         {
             this.Cards.Clear();
         }
-
-
     }
 }
